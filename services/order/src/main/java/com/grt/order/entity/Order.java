@@ -1,5 +1,6 @@
 package com.grt.order.entity;
 
+import com.grt.order.orderline.OrderLine;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -8,6 +9,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @Builder
@@ -34,7 +36,7 @@ public class Order {
     private String customerId;
 
     @OneToMany(mappedBy = "order")
-    private List<OrderLine> orderLines;
+    private     List<OrderLine> orderLines;
 
     @CreatedDate
     @Column(updatable = false, nullable = false)
