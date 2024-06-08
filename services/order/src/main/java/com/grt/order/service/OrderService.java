@@ -2,7 +2,6 @@ package com.grt.order.service;
 
 import com.grt.order.controller.OrderRequest;
 import com.grt.order.customerClient.CustomerClient;
-import com.grt.order.entity.Order;
 import com.grt.order.entity.OrderMapper;
 import com.grt.order.entity.OrderResponse;
 import com.grt.order.exception.BusinessException;
@@ -10,9 +9,10 @@ import com.grt.order.orderline.OrderLineRequest;
 import com.grt.order.orderline.OrderLineService;
 import com.grt.order.orderproducer.OrderConfirmation;
 import com.grt.order.orderproducer.OrderProducer;
+import com.grt.order.payment.PaymentClient;
+import com.grt.order.payment.PaymentRequest;
 import com.grt.order.product.ProductClient;
 import com.grt.order.product.PurchaseRequest;
-import com.grt.order.product.PurchaseResponse;
 import com.grt.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -35,6 +35,8 @@ public class OrderService {
 
     private final OrderProducer orderProducer;
 
+    private final PaymentClient paymentClient;
+
     public Integer createOrder(OrderRequest orderRequest) {
         var customer = this.customerClient.findCustomerById(orderRequest.customerId()).orElseThrow(() -> new BusinessException("customer id not found"));
 
@@ -44,6 +46,10 @@ public class OrderService {
         for (PurchaseRequest purchaseRequest : orderRequest.products()) {
             orderLineService.saveOrderLine(new OrderLineRequest(null, order.getId(), purchaseRequest.productId(), purchaseRequest.quantity()));
         }
+        var paymentRequest = new PaymentRequest(orderRequest.amount(),
+                orderRequest.paymentMethod(), order.getId(), order.getReference(), customer);
+
+        paymentClient.requestOrderPayment(paymentRequest);
         orderProducer.sendOrderConfirmation(
                 new OrderConfirmation(
                         orderRequest.reference(),
