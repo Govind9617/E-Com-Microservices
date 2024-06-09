@@ -8,10 +8,10 @@ public record CustomerRequest(
 
         String id,
 
-        @NotNull (message = "first name required") String firstName,
-        @NotNull (message = "last name required") String lastName,
-        @NotNull (message = "email not null  required")
+        @NotNull(message = "first name required") String firstName,
+        @NotNull(message = "last name required") String lastName,
+        @NotNull(message = "email not null  required")
         @Email(message = "email required")
         String email,
-         Address address) {
+        Address address) {
 }

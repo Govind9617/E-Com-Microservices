@@ -30,7 +30,7 @@ public class ProductClient {
         ParameterizedTypeReference<List<PurchaseResponse>> responseType = new ParameterizedTypeReference<>() {
         };
         ResponseEntity<List<PurchaseResponse>> responseEntity = restTemplate.exchange(
-                productUrl,
+                productUrl + "/purchase",
                 org.springframework.http.HttpMethod.POST,
                 entity,
                 responseType
