@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 @Setter
 @Entity
 public class Product {
+
     @Id
     @GeneratedValue
     private Integer id;

@@ -1,5 +1,9 @@
 package com.payment.payment.entity;
 
+
+import org.springframework.stereotype.Service;
+
+@Service
 public class PaymentMapper {
     public Payment toPayment(PaymentRequest paymentRequest) {
         return Payment.builder().

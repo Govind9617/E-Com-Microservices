@@ -1,20 +1,28 @@
-spring:
-  config:
-    import: optional:configserver:http://localhost:8888
+#spring:
+#  config:
+#    import: optional:configserver:http://localhost:8888
+
 server:
   port: 8070
-#spring:
-#  datasource:
-#    driver-class-name: org.postgresql.Driver
-#    url: jdbc:postgresql://localhost:5432/product
-#    username: postgres
-#    password: root
-#  jpa:
-#    hibernate:
-#      ddl-auto: create
-#    database: postgresql
-#    dialect: org.hibernate.dialect.PostgreSQLDialect
-  #    database-platform: org.hibernate.dialect.PostgreSQL82Dialect
-
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/order
+    username: postgres
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    database: postgresql
+    dialect: org.hibernate.dialect.PostgreSQLDialect
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.type.mapping: OrderConfirmation:com.grt.order.orderproducer.OrderConfirmation
   application:
     name: order-service
+
+

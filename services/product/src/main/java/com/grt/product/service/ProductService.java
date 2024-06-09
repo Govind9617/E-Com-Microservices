@@ -30,7 +30,7 @@ public class ProductService {
 
     public List<ProductPurchaseResponse> purchaseProducts(List<ProductPurchaseRequest> request) {
         var productIds = request.stream().map(ProductPurchaseRequest::productId).toList();
-        var storedProducts = productRepository.findAllByIdInOrderByID(productIds);
+        var storedProducts = productRepository.findAllByIdInOrderById(productIds);
         if (productIds.size() != storedProducts.size()) {
             throw new ProductPurchaseException("Product not found");
         }

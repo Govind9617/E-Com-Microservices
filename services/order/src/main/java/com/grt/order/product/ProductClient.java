@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductClient {
 
-    @Value("${application.config.product-url}")
+    @Value("http://localhost:8050/api/v1/products")
     private String productUrl;
 
     private final RestTemplate restTemplate;
