@@ -1,4 +1,4 @@
-java microservice using springboot-3.
+Java microservice using springboot-3.
 
 DB : momgodb and postgres should run in local.
 
